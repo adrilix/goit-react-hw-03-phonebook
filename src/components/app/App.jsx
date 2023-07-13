@@ -16,6 +16,8 @@ export class App extends Component {
     filter: '',
   };
 
+ 
+
   handleSubmit = ({ name, number }) => {
     const contact = {
       id: nanoid(),
@@ -53,6 +55,20 @@ export class App extends Component {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== contactId)
     }))
+  }
+
+  componentDidMount () {
+    const contactsLocal = JSON.parse(localStorage.getItem('contacts'));
+
+    if (contactsLocal) {
+      this.setState ({contacts: contactsLocal});
+    }
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+        if (prevState.contacts !== this.state.contacts) {
+          localStorage.setItem('contacts', JSON.stringify( this.state.contacts));
+        }
   }
 
 
