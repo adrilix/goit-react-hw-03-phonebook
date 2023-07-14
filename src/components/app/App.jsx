@@ -51,19 +51,21 @@ export class App extends Component {
     }));
   };
 
-  componentDidMount() {
-    const contactsLocal = JSON.parse(localStorage.getItem('contacts'));
+  // componentDidMount() {
+  //   const contactsLocal = JSON.parse(localStorage.getItem('contacts'));
 
-    if (contactsLocal) {
-      this.setState({ contacts: contactsLocal });
-    }
-  }
+  //   if (contactsLocal) {
+  //     this.setState({ contacts: contactsLocal });
+  //   }
+  // }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.contacts !== this.state.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-    }
-  }
+  // componentDidUpdate(_, prevState) {
+  //   if (prevState.contacts !== this.state.contacts) {
+  //     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  //   }
+  // }
+
+  
 
   render() {
     const { filter, contacts } = this.state;
