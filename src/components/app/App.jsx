@@ -16,6 +16,23 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+
+    const savedContacts = localStorage.getItem("contacts");
+    console.log(savedContacts);
+    
+    if (savedContacts) {
+    const parsedContacts = JSON.parse(savedContacts);
+      this.setState({ contacts: parsedContacts })
+    };
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (this.contacts !== prevState.contacts) {
+      localStorage.setItem("contacts", JSON.stringify(this.state.contacts))
+    }
+  }
+
   handleSubmit = ({ name, number }) => {
     const contact = {
       id: nanoid(),
@@ -28,8 +45,8 @@ export class App extends Component {
     findedName
       ? alert(`Contact ${contact.name} is already in the contacts list`)
       : this.setState(prevState => {
-          return { contacts: [contact, ...prevState.contacts] };
-        });
+        return { contacts: [contact, ...prevState.contacts] };
+      });
   };
 
   changeFilter = event => {
@@ -50,22 +67,6 @@ export class App extends Component {
       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
   };
-
-  // componentDidMount() {
-  //   const contactsLocal = JSON.parse(localStorage.getItem('contacts'));
-
-  //   if (contactsLocal) {
-  //     this.setState({ contacts: contactsLocal });
-  //   }
-  // }
-
-  // componentDidUpdate(_, prevState) {
-  //   if (prevState.contacts !== this.state.contacts) {
-  //     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-  //   }
-  // }
-
-  
 
   render() {
     const { filter, contacts } = this.state;
